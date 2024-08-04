@@ -23,7 +23,8 @@
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/../instagram2\templates" />
+        <option value="$MODULE_DIR$/account/templates" />
+        <option value="$MODULE_DIR$/webapp/templates" />
       </list>
     </option>
   </component>

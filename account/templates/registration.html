@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Registration</title>
+{% endblock %}
+
+{% block content %}
+    <div class="form border pt-4 pb-4">
+        <h3 class="text-center"><img src="{% static 'logo.jpeg' %}" alt="logo" style="width: 150px;"></h3>
+        <p class="text-center fs-6">Зарегистрируйтесь, чтобы увидеть <br> фотографии и видео от своих <br> друзей.</p>
+
+        <form action="{% url 'account:registration' %}" method="post" enctype="multipart/form-data" class="text-center">
+            {% csrf_token %}
+            <div class="errors text-danger">
+                {{ form.non_field_errors }}
+                {{ form.username.errors }}
+            </div>
+        
+            <div class="form-group mb-2">
+                <input type="text" name="username" id="username" placeholder="Username" required
+                       value="{{ form.username.value|default_if_none:'' }}">
+            </div>
+            {{ form.email.errors }}
+            <div class="form-group mb-2">
+                <input type="email" name="email" id="email" placeholder="Email" required
+                       value="{{ form.email.value|default_if_none:'' }}">
+            </div>
+            {{ form.avatar.errors }}
+            <div class="form-group mb-2">
+                <input type="file" name="avatar" id="avatar" placeholder="Upload Avatar">
+            </div>
+            {{ form.password.errors }}
+            <div class="form-group mb-2">
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            {{ form.password_confirm.errors }}
+            <div class="form-group mb-2">
+                <input type="password" name="password_confirm" id="password_confirm" placeholder="Confirm Password"
+                       required>
+            </div>
+            {{ form.first_name.errors }}
+            <div class="form-group mb-2">
+                <input type="text" name="first_name" id="first_name" placeholder="First name"
+                       value="{{ form.first_name.value|default_if_none:'' }}">
+            </div>
+            {{ form.bio.errors }}
+            <div class="form-group mb-2">
+                <input type="text" name="bio" id="bio" placeholder="Bio"
+                       value="{{ form.bio.value|default_if_none:'' }}">
+            </div>
+            {{ form.phone_num.errors }}
+            <div class="form-group mb-2">
+                <input type="text" name="phone_num" id="phone_num" placeholder="Phone number"
+                       value="{{ form.phone_num.value|default_if_none:'' }}">
+            </div>
+            {{ form.gender.errors }}
+            <div class="form-group mb-2">
+                <select name="gender" id="gender">
+                    <option value="" disabled selected>Пол</option>
+                    {% for key, value in form.gender.field.choices %}
+                        <option value="{{ key }}"
+                                {% if form.gender.value == key %}selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sign up</button>
+        </form>
+    </div>
+
+    <div class="login border pb-3 pt-3 mt-3">
+        <h6 class="text-center">Есть аккаунт? <a href="{% url 'account:login' %}">Войти</a></h6>
+    </div>
+{% endblock %}

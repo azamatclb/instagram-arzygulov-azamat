@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+    <h1>kkkk</h1>
+    {% if request.user.avatar %}
+        <img src="{{ request.user.avatar.url }}" alt="pfp" style="width: 150px; height: 150px; border-radius: 100px">
+    {% else %}
+        <p>no pfp</p>
+    {% endif %}
+
+{% endblock %}
