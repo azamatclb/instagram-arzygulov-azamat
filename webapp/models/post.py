@@ -15,3 +15,8 @@ class Post(models.Model):
 
     def __str__(self):
         return self.summary[:30]
+
+    class Meta:
+        db_table = 'posts'
+        verbose_name = 'пост'
+        verbose_name_plural = 'посты'

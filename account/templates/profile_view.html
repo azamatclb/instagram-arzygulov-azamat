@@ -57,8 +57,9 @@
                         <div class="card shadow-sm">
                             <div class="card-body">
                                 {% if post.image %}
-                                    <img src="{{ post.image.url }}" class="card-img-top mb-3" alt="Post Image"
-                                         style="width: 100%; height: 300px; object-fit: cover;">
+                                    <a href="{% url 'webapp:post_comment_view' post.id %}"><img src="{{ post.image.url }}" class="card-img-top mb-3"
+                                                         alt="Post Image"
+                                                         style="width: 100%; height: 300px; object-fit: cover;"></a>
                                 {% else %}
                                     <img src="{% static 'img.png' %}" alt="No Image Available">
                                 {% endif %}

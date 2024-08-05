@@ -6,6 +6,7 @@ from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 
 from account.models import Profile
+from webapp.forms.comment import CommentForm
 from webapp.forms.like import LikeForm
 from webapp.forms.post import PostForm
 from webapp.models import Post
@@ -67,6 +68,13 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     template_name = 'post_templates/post_view.html'
     context_object_name = 'post'
     model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        context['comments'] = post.comment.all()
+        context['form'] = CommentForm()
+        return context
 
 
 class PostLikeView(LoginRequiredMixin, View):

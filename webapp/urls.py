@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.urls import path
 
-from webapp.views.post import PostListView, PostAddView, PostDeleteView, PostUpdateView, PostLikeView
+from webapp.views.comment import CommentAddView, CommentDeleteView
+from webapp.views.post import PostListView, PostAddView, PostDeleteView, PostUpdateView, PostLikeView, PostDetailView
 
 app_name = 'webapp'
 urlpatterns = [
@@ -25,5 +26,8 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post_update'),
     path('post/<int:post_id>/like/', PostLikeView.as_view(), name='like_post'),
+    path('post/<int:pk>/comment/add', CommentAddView.as_view(), name='comment_add'),
+    path('post/<int:pk>/view', PostDetailView.as_view(), name='post_comment_view'),
+    path('post/<int:post_pk>/comment/<int:comment_pk>/delete/', CommentDeleteView.as_view(), name='comment_delete')
 
 ]

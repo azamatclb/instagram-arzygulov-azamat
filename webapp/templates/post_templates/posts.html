@@ -41,8 +41,9 @@
                                 </div>
                             {% endif %}
                         </div>
+                        <a href="{% url 'webapp:post_comment_view' post.pk %}">
                         <img src="{{ post.image.url }}" class="card-img-top card-image mb-3" alt="Post Image"
-                             style="width:500px; height:500px">
+                             style="width:500px; height:500px"></a>
 
                         <p class="card-text">{{ post.summary }}</p>
                     </div>
@@ -55,13 +56,14 @@
                                     <button type="submit" class="btn btn-link text-danger">
                                         <i class="bi bi-heart{% if request.user in post.liked_by.all %}-fill{% endif %}"></i>
                                     </button>
-                                    {{ post.likes_count }} Likes
+                                    {{ post.likes_count }} Likes <br>
+                                    {{ post.created_at|date:'Y-m-d' }}
                                 </form>
                             </span>
                         </div>
                         <div>
                             <span class="me-2">
-                                <a href="" style="text-decoration: none; color: black"><i class="bi bi-chat-dots"></i> {{ post.comments_count }} Comments</a>
+                                <a href="{% url 'webapp:post_comment_view' post.pk %}" style="text-decoration: none; color: black"><i class="bi bi-chat-dots"></i> {{ post.comments_count }} Comments</a>
                             </span>
                         </div>
                     </div>

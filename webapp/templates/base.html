@@ -22,8 +22,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-white mb-3">
     <div class="container-fluid">
-        <a href="{% url 'webapp:posts' %}"> <img src="{% static 'logo.jpeg' %}" alt="logo" style="width: 150px">
-        </a>
+        <a href="{% url 'webapp:posts' %}"> <img src="{% static 'logo.jpeg' %}" alt="logo" style="width: 150px"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -38,29 +37,26 @@
                 <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Поиск</button>
             </form>
-        {% else %}
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'account:login' %}">Войти</a>
-                </li>
-            </ul>
         {% endif %}
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'webapp:post_add' %}">Добавить пост</a>
-            </li>
-        </ul>
+
         {% if request.user.is_authenticated %}
-
-            <div class="profile ms-auto">
-                <a href="{% url 'account:profile' request.user.pk %}"
-                   style="text-decoration: none; color: black; text-align: center;">
-                    <big>
-                        <i class="bi bi-person" style="font-size: 2rem;"></i>
-                    </big><br>
-                    <small>{{ request.user }}</small><br>
-
-                </a>
+            <div class="d-flex ms-auto align-items-center">
+                <ul class="navbar-nav me-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'webapp:post_add' %}">
+                            <i class="bi bi-plus-square" style="font-size: 25px;"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="profile">
+                    <a href="{% url 'account:profile' request.user.pk %}"
+                       style="text-decoration: none; color: black; text-align: center;">
+                        <big>
+                            <i class="bi bi-person" style="font-size: 35px;"></i>
+                        </big><br>
+                        <small>{{ request.user }}</small><br>
+                    </a>
+                </div>
             </div>
         {% else %}
             <div class="profile ms-auto">
@@ -72,16 +68,12 @@
                 </a>
             </div>
         {% endif %}
-
     </div>
-
 </nav>
 
 <div class="container">
     {% block content %}
-
     {% endblock %}
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

@@ -25,6 +25,10 @@ class Profile(AbstractUser):
     def __str__(self):
         return self.username
 
+    class Meta:
+        db_table = "profile"
+        verbose_name = 'профиль'
+        verbose_name_plural = "профили"
 
 class Subscription(models.Model):
     follower = models.ForeignKey(Profile, related_name='follower_set', on_delete=models.CASCADE)
