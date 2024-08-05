@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.urls import path
 
-from webapp.views.post import PostListView, PostAddView, PostDeleteView, PostUpdateView
+from webapp.views.post import PostListView, PostAddView, PostDeleteView, PostUpdateView, PostLikeView
 
 app_name = 'webapp'
 urlpatterns = [
     path('', PostListView.as_view(), name='posts'),
     path('post/add', PostAddView.as_view(), name='post_add'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
-    path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post_update')
+    path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post_update'),
+    path('post/<int:post_id>/like/', PostLikeView.as_view(), name='like_post'),
 
 ]

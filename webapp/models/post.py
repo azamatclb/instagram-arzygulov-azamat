@@ -11,6 +11,7 @@ class Post(models.Model):
     comments_count = models.PositiveIntegerField(default=0)
     author = models.ForeignKey(User, related_name="posts", on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True, verbose_name='Дата публикации')
+    liked_by = models.ManyToManyField(User, related_name='liked_posts', blank=True)
 
     def __str__(self):
         return self.summary[:30]

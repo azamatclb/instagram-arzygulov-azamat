@@ -1,9 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from django.views import View
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 
 from account.models import Profile
+from webapp.forms.like import LikeForm
 from webapp.forms.post import PostForm
 from webapp.models import Post
 
@@ -47,7 +50,7 @@ class PostAddView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'post_templates/post_delete.html'
     model = Post
     success_url = reverse_lazy('webapp:posts')
@@ -58,3 +61,28 @@ class PostUpdateView(UpdateView):
     model = Post
     form_class = PostForm
     success_url = reverse_lazy('webapp:posts')
+
+
+class PostDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'post_templates/post_view.html'
+    context_object_name = 'post'
+    model = Post
+
+
+class PostLikeView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        form = LikeForm(request.POST)
+        if form.is_valid():
+            post_id = form.cleaned_data.get('post_id')
+            post = get_object_or_404(Post, id=post_id)
+
+            if request.user not in post.liked_by.all():
+                post.liked_by.add(request.user)
+                post.likes_count += 1
+                post.save()
+            else:
+                post.liked_by.remove(request.user)
+                post.likes_count -= 1
+                post.save()
+
+        return redirect('webapp:posts')
