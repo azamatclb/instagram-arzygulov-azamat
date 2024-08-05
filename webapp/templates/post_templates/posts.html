@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Posts</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="d-flex flex-column align-items-center">
+            {% for post in posts %}
+                <div class="card shadow-sm mb-3 w-50  text-center">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            {% if post.author.avatar %}
+                                <a href="{% url 'account:profile' post.author.pk %}">
+                                    <img src="{{ post.author.avatar.url }}" class="avatar me-3" alt="Author Avatar"
+                                         style="height: 50px; width: 50px; border-radius: 50%;">
+                                </a>
+                            {% else %}
+                                <a href="{% url 'account:profile' post.author.pk %}">
+                                    <img src="{% static 'img.png' %}" class="avatar me-3" alt="Default Avatar"
+                                         style="height: 50px; width: 50px; border-radius: 50%;">
+                                </a>
+                            {% endif %}
+                            <a href="{% url 'account:profile' post.author.pk %}" style="text-decoration: none; color: black"><h5 class="card-title mb-0" >{{ post.author.username }}</h5></a>
+                        </div>
+                        <img src="{{ post.image.url }}" class="card-img-top card-image mb-3" alt="Post Image"
+                             style="width:500px; height:500px">
+
+                        <p class="card-text">{{ post.summary }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="me-2"><button type="submit" class="btn btn-link text-danger"><i class="bi bi-heart"></i></button> {{ post.likes_count }} Likes</span>
+                        </div>
+                        <div>
+                            <span class="me-2"><i class="bi bi-chat-dots"></i> {{ post.comments_count }} Comments</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
