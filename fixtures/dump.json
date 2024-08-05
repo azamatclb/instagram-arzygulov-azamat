@@ -1,0 +1,225 @@
+[
+  {
+    "model": "webapp.post",
+    "pk": 6,
+    "fields": {
+      "image": "post/cat.jpg",
+      "summary": "Редактированное описание",
+      "likes_count": 2,
+      "comments_count": 0,
+      "author": [
+        "azamat"
+      ],
+      "created_at": "2024-01-18",
+      "liked_by": [
+        [
+          "azamat"
+        ],
+        [
+          "admin"
+        ]
+      ]
+    }
+  },
+  {
+    "model": "webapp.post",
+    "pk": 7,
+    "fields": {
+      "image": "post/ronaldo2008.jpg",
+      "summary": "123",
+      "likes_count": 2,
+      "comments_count": 0,
+      "author": [
+        "azamat"
+      ],
+      "created_at": "2024-01-18",
+      "liked_by": [
+        [
+          "azamat"
+        ],
+        [
+          "admin"
+        ]
+      ]
+    }
+  },
+  {
+    "model": "webapp.post",
+    "pk": 8,
+    "fields": {
+      "image": "post/photo_1_2024-08-05_05-28-24.jpg",
+      "summary": "1",
+      "likes_count": 2,
+      "comments_count": 0,
+      "author": [
+        "admin"
+      ],
+      "created_at": "2024-01-18",
+      "liked_by": [
+        [
+          "azamat"
+        ],
+        [
+          "admin"
+        ]
+      ]
+    }
+  },
+  {
+    "model": "webapp.post",
+    "pk": 10,
+    "fields": {
+      "image": "post/photo_5_2024-08-05_05-28-24.jpg",
+      "summary": "12",
+      "likes_count": 3,
+      "comments_count": 0,
+      "author": [
+        "admin"
+      ],
+      "created_at": "2024-01-18",
+      "liked_by": [
+        [
+          "azamat"
+        ],
+        [
+          "azg"
+        ],
+        [
+          "admin"
+        ]
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 3,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 4,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 5,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 6,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 7,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 8,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 9,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 10,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 11,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 12,
+    "fields": {
+      "comment": "1ый Комментарий",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 13,
+    "fields": {
+      "comment": "adadawdaw",
+      "post": 7,
+      "author": [
+        "azamat"
+      ]
+    }
+  },
+  {
+    "model": "webapp.comment",
+    "pk": 15,
+    "fields": {
+      "comment": "3 комментарий",
+      "post": 8,
+      "author": [
+        "admin"
+      ]
+    }
+  }
+]
