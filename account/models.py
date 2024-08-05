@@ -16,9 +16,21 @@ class Profile(AbstractUser):
     followers_count = models.PositiveIntegerField(default=0)
     following_count = models.PositiveIntegerField(default=0)
 
+    followers = models.ManyToManyField('self', through='Subscription', symmetrical=False, related_name='following')
+
     groups = models.ManyToManyField('auth.Group', related_name='profile_user_set', blank=True, verbose_name='groups')
     user_permissions = models.ManyToManyField(
         'auth.Permission', related_name='profile_user_set', blank=True, verbose_name='user permissions')
 
     def __str__(self):
         return self.username
+
+
+class Subscription(models.Model):
+    follower = models.ForeignKey(Profile, related_name='follower_set', on_delete=models.CASCADE)
+    following = models.ForeignKey(Profile, related_name='following_set', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('follower', 'following')
+

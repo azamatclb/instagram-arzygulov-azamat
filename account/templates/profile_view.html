@@ -10,17 +10,17 @@
         <div class="profile-header d-flex align-items-center mb-4">
             <div class="profile-avatar me-3">
                 {% if user_obj.avatar %}
-                    <img src="{{ user_obj.avatar.url }}" alt="Profile Picture" class="img-fluid rounded-circle"
+                    <img src="{{ user_obj.avatar.url }}" alt="pfp" class="img-fluid rounded-circle"
                          style="width: 150px; height: 150px;">
                 {% else %}
-                    <img src="{% static 'img.png' %}" alt="Default Profile Picture" class="img-fluid rounded-circle"
+                    <img src="{% static 'img.png' %}" alt="pfp" class="img-fluid rounded-circle"
                          style="width: 150px; height: 150px;">
                 {% endif %}
             </div>
             <div>
                 <h1 class="mb-2">{{ user_obj.username }}</h1>
                 <h2 class="mb-2">{{ user_obj.first_name|default:'' }}</h2>
-                <p class="bio">{{ user_obj.bio|default:'No bio available' }}</p>
+                <p class="bio">{{ user_obj.bio|default:'--' }}</p>
                 <div class="d-flex justify-content-between mb-3">
                     <div class="text-center mx-3">
                         <h4>{{ posts_count }} posts</h4>
@@ -32,6 +32,20 @@
                         <h4>{{ following_count }} following</h4>
                     </div>
                 </div>
+                {% if user_obj.username != request.user.username %}
+
+                    {% if is_subscribed %}
+                        <form action="{% url 'account:unsubscribe' user_obj.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary">Unsubscribe</button>
+                        </form>
+                    {% else %}
+                        <form action="{% url 'account:subscribe' user_obj.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
 

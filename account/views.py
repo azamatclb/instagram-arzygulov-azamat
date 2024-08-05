@@ -1,33 +1,17 @@
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
+from django.views import View
 from django.views.generic import CreateView, DetailView, ListView
 
-from account.foms import UserRegistrationForm, SearchForm
-from account.models import Profile
+from account.forms import UserRegistrationForm, SearchForm
+from account.models import Profile, Subscription
 from webapp.models import Post
 
-# Create your views here.
-
-
 User = get_user_model()
-
-
-def login_view(request):
-    context = {}
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('webapp:posts')
-        else:
-            context["has_error"] = True
-    return render(request, 'login.html', context=context)
 
 
 def logout_view(request):
@@ -62,11 +46,11 @@ class ProfileView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.object
-        posts = Post.objects.filter(author=profile)
-        context['posts'] = posts
-        context['posts_count'] = posts.count()
+        context['posts'] = Post.objects.filter(author=profile)
+        context['posts_count'] = profile.posts_count
         context['followers_count'] = profile.followers_count
         context['following_count'] = profile.following_count
+        context['is_subscribed'] = self.request.user.following.filter(id=profile.id).exists()
         return context
 
 
@@ -102,4 +86,35 @@ class ProfileList(ListView):
         form = self.form
         if form.is_valid():
             return form.cleaned_data['search']
-        return form
+        return None
+
+
+class SubscribeView(LoginRequiredMixin, View):
+    def post(self, request, user_id):
+        user_to_subscribe = get_object_or_404(Profile, id=user_id)
+
+        if request.user != user_to_subscribe:
+            subscription, created = Subscription.objects.get_or_create(follower=request.user, following=user_to_subscribe)
+            if created:
+                request.user.following_count += 1
+                user_to_subscribe.followers_count += 1
+                request.user.save()
+                user_to_subscribe.save()
+
+        return HttpResponseRedirect(reverse('account:profile', args=[user_id]))
+
+
+class UnsubscribeView(LoginRequiredMixin, View):
+    def post(self, request, user_id):
+        user_to_unfollow = get_object_or_404(Profile, id=user_id)
+        if request.user != user_to_unfollow:
+            subscription = Subscription.objects.filter(follower=request.user, following=user_to_unfollow).first()
+
+            if subscription:
+                subscription.delete()
+                request.user.following_count -= 1
+                user_to_unfollow.followers_count -= 1
+                request.user.save()
+                user_to_unfollow.save()
+
+        return HttpResponseRedirect(reverse('account:profile', args=[user_id]))

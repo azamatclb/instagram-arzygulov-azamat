@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 
+from account.models import Profile
 from webapp.forms.post import PostForm
 from webapp.models import Post
 
@@ -15,6 +16,24 @@ class PostListView(LoginRequiredMixin, ListView):
     template_name = 'post_templates/posts.html'
     model = Post
     context_object_name = 'posts'
+    ordering = "-created_at"
+
+    class PostListView(LoginRequiredMixin, ListView):
+        template_name = 'post_templates/posts.html'
+        model = Post
+        context_object_name = 'posts'
+        ordering = "-created_at"
+
+        def get_queryset(self):
+            user = self.request.user
+            if not hasattr(user, 'profile'):
+                return Post.objects.none()
+
+            followed_profiles = Profile.objects.filter(following__follower=user.profile)
+
+            queryset = Post.objects.filter(author__in=followed_profiles).order_by('-created_at')
+
+            return queryset
 
 
 class PostAddView(LoginRequiredMixin, CreateView):
@@ -39,4 +58,3 @@ class PostUpdateView(UpdateView):
     model = Post
     form_class = PostForm
     success_url = reverse_lazy('webapp:posts')
-
