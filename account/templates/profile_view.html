@@ -10,20 +10,31 @@
         <div class="profile-header d-flex align-items-center mb-4">
             <div class="profile-avatar me-3">
                 {% if user_obj.avatar %}
-                    <img src="{{ user_obj.avatar.url }}" alt="pfp" class="img-fluid rounded-circle"
+                    <img src="{{ user_obj.avatar.url }}" alt="Profile Picture" class="img-fluid rounded-circle"
                          style="width: 150px; height: 150px;">
                 {% else %}
-                    <img src="{% static 'img.png' %}" alt="pfp" class="img-fluid rounded-circle"
+                    <img src="{% static 'img.png' %}" alt="Default Profile Picture" class="img-fluid rounded-circle"
                          style="width: 150px; height: 150px;">
                 {% endif %}
             </div>
             <div>
                 <h1 class="mb-2">{{ user_obj.username }}</h1>
-                <h2 class="mb-2">{{ user_obj.first_name|default:' ' }}</h2>
-                <p class="bio">{{ user_obj.bio|default:' ' }}</p>
+                <h2 class="mb-2">{{ user_obj.first_name|default:'' }}</h2>
+                <p class="bio">{{ user_obj.bio|default:'No bio available' }}</p>
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="text-center mx-3">
+                        <h4>{{ posts_count }} posts</h4>
+                    </div>
+                    <div class="text-center mx-3">
+                        <h4>{{ followers_count|default:0 }} followers</h4>
+                    </div>
+                    <div class="text-center mx-3">
+                        <h4>{{ following_count }} following</h4>
+                    </div>
+                </div>
             </div>
         </div>
-        <br>
+
         <h3>Posts</h3>
         <div class="container">
             <div class="row">
@@ -31,38 +42,18 @@
                     <div class="col-md-4 mb-3">
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    {% if user_obj.avatar %}
-                                    <img src="{{ user_obj.avatar.url }}" alt="pfp" class="img-fluid rounded-circle"
-                                         style="height: 50px; width: 50px; border-radius: 50%;">
-                                {% else %}
-                                    <img src="{% static 'img.png' %}" class="avatar me-3" alt="Default Avatar"
-                                         style="height: 50px; width: 50px; border-radius: 50%;">
-                                {% endif %}
-                                    <h5 class="card-title mb-0">{{ post.author.username }}</h5>
-                                </div>
-                                {% if post.image.url %}
-                                    <img src="{{ post.image.url }}" class="card-img-top card-image mb-3"
-                                         alt="Post Image"
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" class="card-img-top mb-3" alt="Post Image"
                                          style="width: 100%; height: 300px; object-fit: cover;">
                                 {% else %}
-                                    <img src="{% static 'img.png' %}" alt="">
+                                    <img src="{% static 'img.png' %}" alt="No Image Available">
                                 {% endif %}
-                                <p class="card-text">{{ post.summary }}</p>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="me-2"><i class="bi bi-heart"></i> {{ post.likes_count }} Likes</span>
-                                </div>
-                                <div>
-                                    <span class="me-2"><i class="bi bi-chat-dots"></i> {{ post.comments_count }} Comments</span>
-                                </div>
                             </div>
                         </div>
                     </div>
                 {% empty %}
                     <div class="col-12">
-                        <p>No posts found.</p>
+                        <p class="text-center">No posts available.</p>
                     </div>
                 {% endfor %}
             </div>

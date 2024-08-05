@@ -39,3 +39,7 @@ class UserRegistrationForm(forms.ModelForm):
         model = Profile
         fields = ['username', 'email', 'avatar', 'password', 'password_confirm', 'first_name', 'bio', 'phone_num',
                   'gender']
+
+
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=20, label="Поиск", required=False)

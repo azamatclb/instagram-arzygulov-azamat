@@ -34,6 +34,10 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'account:logout' %}">Выйти</a>
                 </li>
             </ul>
+            <form class="d-flex" role="search" method="get" action="{% url 'account:profile_list' %}">
+                <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Поиск</button>
+            </form>
         {% else %}
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -46,15 +50,28 @@
                 <a class="nav-link active" aria-current="page" href="{% url 'webapp:post_add' %}">Добавить пост</a>
             </li>
         </ul>
-        <div class="profile ms-auto">
-            <a href="{% url 'account:profile' request.user.pk %}" style="text-decoration: none; color: black; text-align: center;">
-                <big>
-                    <i class="bi bi-person" style="font-size: 2rem;"></i>
-                </big><br>
-                <small>{{ request.user }}</small><br>
+        {% if request.user.is_authenticated %}
 
-            </a>
-        </div>
+            <div class="profile ms-auto">
+                <a href="{% url 'account:profile' request.user.pk %}"
+                   style="text-decoration: none; color: black; text-align: center;">
+                    <big>
+                        <i class="bi bi-person" style="font-size: 2rem;"></i>
+                    </big><br>
+                    <small>{{ request.user }}</small><br>
+
+                </a>
+            </div>
+        {% else %}
+            <div class="profile ms-auto">
+                <a href="{% url 'account:login' %}"
+                   style="text-decoration: none; color: black; text-align: center;">
+                    <big>
+                        <i class="bi bi-person" style="font-size: 25px;"></i>
+                    </big><br>
+                </a>
+            </div>
+        {% endif %}
 
     </div>
 

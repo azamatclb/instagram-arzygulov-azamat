@@ -1,8 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 
 from webapp.forms.post import PostForm
 from webapp.models import Post
@@ -27,4 +26,17 @@ class PostAddView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class PostDeleteView(DeleteView):
+    template_name = 'post_templates/post_delete.html'
+    model = Post
+    success_url = reverse_lazy('webapp:posts')
+
+
+class PostUpdateView(UpdateView):
+    template_name = 'post_templates/post_update.html'
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy('webapp:posts')
 

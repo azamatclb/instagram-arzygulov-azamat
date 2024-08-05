@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Поиск пользователей</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="my-4">Поиск пользователей</h1>
+
+        <div class="list-group">
+            {% if profiles %}
+                {% for profile in profiles %}
+                    <a href="{% url 'account:profile' profile.pk %}" class="list-group-item list-group-item-action d-flex align-items-center">
+                        {% if profile.avatar %}
+                            <img src="{{ profile.avatar.url }}" alt="pfp" class="img-thumbnail"
+                                 style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px;">
+                        {% else %}
+                            <img src="{% static 'img.png' %}" alt="pfp" class="img-thumbnail"
+                                 style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px;">
+                        {% endif %}
+                        <div>
+                            <h5 class="mb-1">{{ profile.username }}</h5>
+                            <small>{{ profile.first_name|default:"-" }}</small>
+                            <small>{{ profile.email|default:"-" }}</small>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p>Пользователи не найдены.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
