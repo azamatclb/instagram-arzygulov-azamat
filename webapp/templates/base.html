@@ -28,11 +28,6 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         {% if request.user.is_authenticated %}
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'account:logout' %}">Выйти</a>
-                </li>
-            </ul>
             <form class="d-flex" role="search" method="get" action="{% url 'account:profile_list' %}">
                 <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Поиск</button>
@@ -49,17 +44,23 @@
                     </li>
                 </ul>
                 <div class="profile">
-                    <a href="{% url 'account:profile' request.user.pk %}"
-                       style="text-decoration: none; color: black; text-align: center;">
-                        <big>
-                            <i class="bi bi-person" style="font-size: 35px;"></i>
-                        </big><br>
-                        <small>{{ request.user }}</small><br>
-                    </a>
+                    <div class="dropdown ms-auto">
+                        <a href="#" id="dropdownMenuButton" data-bs-toggle="dropdown" role="button"
+                           aria-expanded="false" style="text-decoration: none; color: black;">
+                            <i class="bi bi-person" style="font-size: 35px;"></i><br>
+                            <small>{{ request.user }}</small><br>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item"
+                                   href="{% url 'account:profile' request.user.pk %}">Профиль</a></li>
+                            <li><a class="dropdown-item" href="{% url 'account:logout' %}">Выйти</a></li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         {% else %}
-            <div class="profile ms-auto">
+            <div class=" profile ms-auto">
                 <a href="{% url 'account:login' %}"
                    style="text-decoration: none; color: black; text-align: center;">
                     <big>

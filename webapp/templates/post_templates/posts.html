@@ -29,8 +29,9 @@
 
                             {% if post.author.pk == request.user.pk %}
                                 <div class="dropdown ms-auto">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    <button class="btn btn-link" type="button" id="dropdownMenuButton"
                                             data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <li><a class="dropdown-item" href="{% url 'webapp:post_update' post.pk %}">Редактировать
@@ -39,11 +40,12 @@
                                             пост</a></li>
                                     </ul>
                                 </div>
+
                             {% endif %}
                         </div>
                         <a href="{% url 'webapp:post_comment_view' post.pk %}">
-                        <img src="{{ post.image.url }}" class="card-img-top card-image mb-3" alt="Post Image"
-                             style="width:500px; height:500px"></a>
+                            <img src="{{ post.image.url }}" class="card-img-top card-image mb-3" alt="Post Image"
+                                 style="width:500px; height:500px"></a>
 
                         <p class="card-text">{{ post.summary }}</p>
                     </div>
@@ -63,7 +65,9 @@
                         </div>
                         <div>
                             <span class="me-2">
-                                <a href="{% url 'webapp:post_comment_view' post.pk %}" style="text-decoration: none; color: black"><i class="bi bi-chat-dots"></i> {{ post.comments_count }} Comments</a>
+                                <a href="{% url 'webapp:post_comment_view' post.pk %}"
+                                   style="text-decoration: none; color: black"><i
+                                        class="bi bi-chat-dots"></i> {{ post.comments_count }} Comments</a>
                             </span>
                         </div>
                     </div>
