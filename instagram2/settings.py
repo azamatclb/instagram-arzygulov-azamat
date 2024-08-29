@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
 
     'account',
     'webapp',
@@ -123,7 +124,6 @@ LOGIN_URL = 'account:login'
 
 LOGOUT_REDIRECT_URL = 'webapp:posts'
 LOGIN_REDIRECT_URL = 'webapp:posts'
-
 
 STATIC_URL = '/static/'
 
