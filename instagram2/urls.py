@@ -19,8 +19,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+api_routes = [
+    path('v1/', include('api_v1.urls'))
+]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
-    path('', include('webapp.urls'))
+    path('', include('webapp.urls')),
+    path('api/', include(api_routes))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
