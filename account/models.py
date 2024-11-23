@@ -11,7 +11,7 @@ class Profile(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', verbose_name="Аватарка")
     phone_num = models.CharField(max_length=20, blank=True, null=True, verbose_name='Номер телефона')
     bio = models.CharField(max_length=70, blank=True, null=True, verbose_name='Информация о пользователе')
-    gender = models.CharField(choices=genders, blank=True, null=True)
+    gender = models.CharField(max_length=25, choices=genders, blank=True, null=True)
     posts_count = models.PositiveIntegerField(default=0)
     followers_count = models.PositiveIntegerField(default=0)
     following_count = models.PositiveIntegerField(default=0)
