@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView
-from webapp.forms.comment import CommentForm
-from webapp.models import Comment, Post
+from apps.webapp.forms.comment import CommentForm
+from apps.webapp.models import Comment, Post
 
 
 class CommentAddView(LoginRequiredMixin, CreateView):
@@ -17,6 +17,9 @@ class CommentAddView(LoginRequiredMixin, CreateView):
         pk = self.kwargs.get('pk')
         post = get_object_or_404(Post, id=pk)
         form.instance.post = post
+
+
+
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -27,9 +30,14 @@ class CommentAddView(LoginRequiredMixin, CreateView):
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
     template_name = 'comment_templates/comment_delete.html'
-    success_url = reverse_lazy('webapp:posts')
+    # success_url = ('webapp:posts')
 
     def get_object(self, queryset=None):
         post_pk = self.kwargs.get('post_pk')
         comment_pk = self.kwargs.get('comment_pk')
         return get_object_or_404(Comment, pk=comment_pk, post_id=post_pk)
+
+
+    def get_success_url(self):
+        post_pk = self.kwargs.get('post_pk')
+        return reverse_lazy('webapp:post_comment_view', kwargs={'pk': post_pk})

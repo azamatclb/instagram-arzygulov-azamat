@@ -17,12 +17,12 @@ Including another URLconf
 from django.contrib.auth.views import LoginView
 from django.urls import path
 
-from account.views import RegisterView, ProfileView, ProfileList, logout_view, SubscribeView, UnsubscribeView
+from apps.account.views import RegisterView, ProfileView, ProfileList, logout_view, SubscribeView, UnsubscribeView
 
 app_name = 'account'
 
 urlpatterns = [
-    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('login/', LoginView.as_view(template_name='../templates/login.html'), name='login'),
     path('logout/', logout_view, name='logout'),
     path('registration/', RegisterView.as_view(), name='registration'),
     path('<int:pk>/profile/', ProfileView.as_view(), name='profile'),

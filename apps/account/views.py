@@ -7,9 +7,9 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import CreateView, DetailView, ListView
 
-from account.forms import UserRegistrationForm, SearchForm
-from account.models import Profile, Subscription
-from webapp.models import Post
+from apps.account.forms import UserRegistrationForm, SearchForm
+from apps.account.models import Profile, Subscription
+from apps.webapp.models import Post
 
 User = get_user_model()
 

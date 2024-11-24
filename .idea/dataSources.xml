@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="instagram2@localhost" uuid="bc3c0d71-a74c-4405-bd8e-18a463fba9d9">
+    <data-source source="LOCAL" name="instagram_test@localhost" uuid="342ef688-e0c5-4949-ac54-9589060ebcb2">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/instagram2</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/instagram_test</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

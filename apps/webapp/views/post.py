@@ -5,11 +5,11 @@ from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 
-from account.models import Profile
-from webapp.forms.comment import CommentForm
-from webapp.forms.like import LikeForm
-from webapp.forms.post import PostForm
-from webapp.models import Post
+from apps.account.models import Profile
+from apps.webapp.forms.comment import CommentForm
+from apps.webapp.forms.like import LikeForm
+from apps.webapp.forms.post import PostForm
+from apps.webapp.models import Post
 
 User = get_user_model()
 
@@ -22,22 +22,18 @@ class PostListView(LoginRequiredMixin, ListView):
     context_object_name = 'posts'
     ordering = "-created_at"
 
-    class PostListView(LoginRequiredMixin, ListView):
-        template_name = 'post_templates/posts.html'
-        model = Post
-        context_object_name = 'posts'
-        ordering = "-created_at"
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     if not hasattr(user, 'profile'):
+    #         return Post.objects.none()
+    #
+    #     followed_profiles = Profile.objects.filter(following__follower=user.profile)
+    #
+    #     # queryset = Post.objects.filter(author__in=followed_profiles).order_by('-created_at')
+    #     return queryset
 
-        def get_queryset(self):
-            user = self.request.user
-            if not hasattr(user, 'profile'):
-                return Post.objects.none()
-
-            followed_profiles = Profile.objects.filter(following__follower=user.profile)
-
-            queryset = Post.objects.filter(author__in=followed_profiles).order_by('-created_at')
-
-            return queryset
+    def get_queryset(self):
+        return Post.objects.all().order_by('-created_at')
 
 
 class PostAddView(LoginRequiredMixin, CreateView):
@@ -85,13 +81,13 @@ class PostLikeView(LoginRequiredMixin, View):
             post_id = form.cleaned_data.get('post_id')
             post = get_object_or_404(Post, id=post_id)
 
-            if request.user not in post.liked_by.all():
-                post.liked_by.add(request.user)
-                post.likes_count += 1
-                post.save()
-            else:
-                post.liked_by.remove(request.user)
-                post.likes_count -= 1
-                post.save()
+        if request.user not in post.liked_by.all():
+            post.liked_by.add(request.user)
+            post.likes_count += 1
+            post.save()
+        else:
+            post.liked_by.remove(request.user)
+            post.likes_count -= 1
+            post.save()
 
         return redirect('webapp:post_comment_view', pk=post_id)
